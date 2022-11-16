@@ -1,6 +1,5 @@
 import { AppError } from '../../../../../config/AppError';
 import { CategoryService } from '../../repository/category.service';
-
 import { ICreateCategoriesDTO, ICreateCategoriesResponse } from './createCategory.DTO';
 
 export class CreateCategoriesUseCase {
@@ -12,9 +11,9 @@ export class CreateCategoriesUseCase {
         this.verifyIfParamExists({ param: name, paramName: 'name' });
         this.verifyIfParamExists({ param: icon, paramName: 'icon' });
 
-        const categories = await this.categoryService.create({ name, icon });
+        const category = await this.categoryService.create({ name, icon });
 
-        return categories;
+        return category;
     }
 
     private verifyIfParamExists<T>(params: {
@@ -24,8 +23,8 @@ export class CreateCategoriesUseCase {
 
         if (param == null) {
             throw new AppError({
-                message: `Parameter ${paramName} is required!`,
-                ptMessage: `O parâmetro ${paramName} é obrigatório!`
+                message: `Parameter "${paramName}" is required!`,
+                ptMessage: `O parâmetro "${paramName}" é obrigatório!`
             });
         }
     }

@@ -1,8 +1,5 @@
-export interface ICreateCategoriesDTO {
-    name: string,
-    icon: string,
-}
+import { ICategory, ICreateCategory } from '../../repository/category';
 
-export interface ICreateCategoriesResponse {
-    list: Array<string>
-}
+export type ICreateCategoriesDTO = ICreateCategory;
+
+export type ICreateCategoriesResponse = ICategory;
