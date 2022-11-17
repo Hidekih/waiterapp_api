@@ -1,15 +1,17 @@
 import { IProduct } from '../../Product/repository/product';
 
+interface IProductOrder {
+    product: IProduct;
+    quantity: number;
+}
+
 export interface IOrder {
     _id: string;
     table: string;
     status: 'WAITING' | 'IN_PRODUCTION' | 'DONE';
     createdAt: Date;
     deleted: boolean;
-    products: Array<{
-        product: IProduct;
-        quantity: number;
-    }>;
+    products: Array<IProductOrder>;
 }
 
 export type ICreateOrder = Omit<IOrder, '_id' | 'status' | 'createdAt' | 'deleted'>;
