@@ -15,13 +15,6 @@ export class CreateProductUseCase {
         verifyIfParamExists({ param: imagePath, paramName: 'imagePath' });
         verifyIfParamExists({ param: price, paramName: 'price' });
 
-        if (ingredients == null || ingredients.length == 0) {
-            throw new AppError({
-                message: 'Parameter "ingredients" is required!',
-                ptMessage: 'O parâmetro "ingredientes" é obrigatório!'
-            });
-        }
-
         const categories = await this.productService.create({ name, category, description, imagePath, price, ingredients });
 
         return categories;

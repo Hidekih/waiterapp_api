@@ -5,10 +5,11 @@ export function verifyIfParamExists<T>(params: {
 }): void {
     const { param, paramName } = params;
 
-    if (param == null) {
+    if (!param) {
         throw new AppError({
             message: `Parameter "${paramName}" is required!`,
-            ptMessage: `O parâmetro "${paramName}" é obrigatório!`
+            ptMessage: `O parâmetro "${paramName}" é obrigatório!`,
+            errorStatusCode: 400
         });
     }
 }

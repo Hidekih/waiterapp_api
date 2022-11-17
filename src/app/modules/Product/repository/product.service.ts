@@ -12,7 +12,7 @@ export class ProductService implements IProductRepository{
 
         let pipeline = {};
         if (categoryId != null) {
-            pipeline = { category: categoryId };
+            pipeline = { ...pipeline, category: categoryId };
         }
 
         const products = await Product.find(pipeline);

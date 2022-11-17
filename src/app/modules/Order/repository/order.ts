@@ -1,7 +1,5 @@
-import { IProduct } from '../../Product/repository/product';
-
 interface IProductOrder {
-    product: IProduct;
+    product: string;
     quantity: number;
 }
 

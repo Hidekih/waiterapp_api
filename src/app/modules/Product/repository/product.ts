@@ -12,7 +12,13 @@ export interface IProduct {
     createdAt: Date;
 }
 
-export type ICreateProduct = Omit<IProduct, '_id' | 'createdAt'>;
+export type ICreateProduct = Omit<IProduct, '_id' | 'createdAt' | 'ingredients'>
+    & {
+        ingredients?: Array<{
+            name: string;
+            icon: string;
+        }>,
+};
 
 export interface IProductRepository {
     create(params: ICreateProduct): Promise<IProduct>

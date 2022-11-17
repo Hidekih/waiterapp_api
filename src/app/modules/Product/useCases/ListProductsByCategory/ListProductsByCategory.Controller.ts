@@ -9,7 +9,7 @@ export class ListProductsByCategoryController {
 
     async handle(req: Request, res: Response): Promise<Response> {
         try {
-            const dto = req.query as unknown as IListProductsByCategoryDTO;
+            const dto = req.params as unknown as IListProductsByCategoryDTO;
 
             const result = await this.listProductsByCategoryUseCase.exec(dto);
 

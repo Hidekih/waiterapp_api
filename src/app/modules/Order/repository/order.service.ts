@@ -12,35 +12,34 @@ export class OrderService implements IOrderRepository {
         const { table ,status } = params;
 
         // Build pipeline
-        let pipeline = {};
-        if (table != null) pipeline = { table };
-        if (status != null && status.length > 0) pipeline = { status: { '$in': status } };
+        let pipeline: any = { deleted: false };
+        if (table != null) pipeline = { ...pipeline, table };
+        if (status != null && status.length > 0) pipeline = { ...pipeline, status: { '$in': status } };
 
-        const orders = await Order.find(pipeline);
+        const orders = await Order
+            .find(pipeline)
+            .sort({ createdAt: 1 })
+            .populate('products.product');
 
         return orders.map((o => o.toObject())) ?? [];
     }
     async updateStatus(params: { orderId: string; status: 'WAITING' | 'IN_PRODUCTION' | 'DONE'; }): Promise<IOrder> {
         const { orderId, status } = params;
 
-        const order = await Order.findById(orderId);
+        const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
 
         if (order == null) {
             throw new AppError({
                 errorStatusCode: 410,
             });
         }
-
-        order.status = status;
-
-        await Order.updateOne({ order });
 
         return order.toObject();
     }
     async delete(params: { orderId: string; }): Promise<IOrder> {
         const { orderId } = params;
 
-        const order = await Order.findById(orderId);
+        const order = await Order.findByIdAndUpdate(orderId, { deleted: true }, { new: true });
 
         if (order == null) {
             throw new AppError({
@@ -48,9 +47,6 @@ export class OrderService implements IOrderRepository {
             });
         }
 
-        order.deleted = true;
-
-        await Order.updateOne({ order });
 
         return order.toObject();
     }

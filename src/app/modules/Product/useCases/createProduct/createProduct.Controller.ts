@@ -9,6 +9,10 @@ export class CreateProductController {
     async handle(req: Request, res: Response): Promise<Response> {
         try {
             const dto = req.body;
+            const imagePath = req.file?.filename;
+
+            dto.imagePath = imagePath;
+            dto.ingredients = typeof dto.ingredients == 'string' ? JSON.parse(dto.ingredients) : dto.ingredients;
 
             const result = await this.createProductUseCase.exec(dto);
 
