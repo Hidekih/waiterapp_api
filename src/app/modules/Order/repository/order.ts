@@ -18,7 +18,7 @@ export type ICreateOrder = Omit<IOrder, '_id' | 'status' | 'createdAt' | 'delete
 
 export interface IOrderRepository {
     create(params: ICreateOrder): Promise<IOrder>;
-    readList(params: { status?: Array<'WAITING' | 'IN_PRODUCTION' | 'DONE'> }): Promise<Array<IOrder>>;
+    readList(params: { table?: string; status?: Array<'WAITING' | 'IN_PRODUCTION' | 'DONE'> }): Promise<Array<IOrder>>;
     updateStatus(params: { orderId: string; status: 'WAITING' | 'IN_PRODUCTION' | 'DONE' }): Promise<IOrder>;
     delete(params: { orderId: string }): Promise<IOrder>;
 }

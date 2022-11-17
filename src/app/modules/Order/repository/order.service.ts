@@ -8,13 +8,13 @@ export class OrderService implements IOrderRepository {
 
         return order.toObject();
     }
-    async readList(params: { status?: Array<'WAITING' | 'IN_PRODUCTION' | 'DONE'> }): Promise<IOrder[]> {
-        const { status } = params;
+    async readList(params: { table?: string; status?: Array<'WAITING' | 'IN_PRODUCTION' | 'DONE'> }): Promise<IOrder[]> {
+        const { table ,status } = params;
 
+        // Build pipeline
         let pipeline = {};
-        if (status != null && status.length > 0) {
-            pipeline = { status: { '$in': status } };
-        }
+        if (table != null) pipeline = { table };
+        if (status != null && status.length > 0) pipeline = { status: { '$in': status } };
 
         const orders = await Order.find(pipeline);
 
