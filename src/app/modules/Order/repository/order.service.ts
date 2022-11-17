@@ -40,13 +40,13 @@ export class OrderService implements IOrderRepository {
         const { orderId } = params;
 
         const order = await Order.findByIdAndUpdate(orderId, { deleted: true }, { new: true });
+        // const order = await Order.findByIdAndDelete(orderId);
 
         if (order == null) {
             throw new AppError({
                 errorStatusCode: 410,
             });
         }
-
 
         return order.toObject();
     }
